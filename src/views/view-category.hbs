@@ -1,3 +1,13 @@
+<div class="container mx-auto my-2 d-flex justify-content-start align-items-center">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-0">
+      <li class="breadcrumb-item"><a href="http://localhost:3000/api/v1/categories/" class="text-decoration-none">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{category.name}}</li>
+    </ol>
+  </nav>
+</div>
+
+
 <div class="container-fluid w-100 d-flex justify-content-around align-items-center mt-5">
   <div class="card" style="width: 18rem;">
     <img src="{{category.image_url}}" class="card-img-top" alt="{{category.name}}" />
