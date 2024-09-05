@@ -1,0 +1,92 @@
+<div class="container-fluid w-100 d-flex justify-content-around align-items-center mt-5">
+  <div class="card" style="width: 18rem;">
+    <img src="{{category.image_url}}" class="card-img-top" alt="{{category.name}}" />
+    <div class="card-body">
+      <p class="card-text">
+        <a href="#" class="btn btn-dark">{{category.name}}</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid w-100 d-flex justify-content-center align-items-center mt-2">
+  <h1>Products</h1>
+</div>
+
+<div class="container-fluid w-100 d-flex justify-content-between align-items-center mt-2">
+  <div class="container mx-auto row row-gap-5">
+    {{#each category.products}}
+    <div class="col-xxl-3 col-md-6">
+      <div class="card" style="width: 18.75rem;">
+        <img src="{{this.image_url}}" class="card-img-top" style="height: 300px; width: 300px; object-fit: cover;"
+          alt="{{this.name}}" />
+        <div class="card-body">
+          <h5 class="card-title">{{this.name}}</h5>
+          <p class="card-text">Price: {{this.price}}$</p>
+          <p class="card-text">Count: {{this.count}}</p>
+          <div class="container mx-auto d-flex justify-content-between align-items-center">
+            <a class="btn btn-primary"
+              onclick="orderFunc('{{this.id}}','{{this.image_url}}', '{{this.name}}', '{{this.price}}', '{{this.count}}', '{{this.rating}}')">
+              <i class="bi bi-bag"></i>
+              <span>Order</span>
+            </a>
+            <a class="btn btn-danger"
+              onclick="likeFunc('{{this.id}}','{{this.image_url}}', '{{this.name}}', '{{this.price}}', '{{this.count}}', '{{this.rating}}')">
+              <i class="bi bi-bag-heart-fill"></i>
+              <span>Like</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
+
+
+
+<script>
+  const orderFunc = async (id, image_url, name, price, count, rating) => {
+    const product = { id, image_url, name, price, count, rating };
+
+
+    let orderedProducts = JSON.parse(localStorage.getItem('Orderedproducts')) || [];
+
+
+    const productExists = orderedProducts.some(p => p.id === id);
+
+    if (!productExists) {
+
+      orderedProducts.push(product);
+      localStorage.setItem('Orderedproducts', JSON.stringify(orderedProducts));
+      alert("Product added order list")
+    } else {
+      alert("Product arleady ordered")
+
+    }
+
+  };
+
+
+
+  const likeFunc = async (id, image_url, name, price, count, rating) => {
+    const product = { id, image_url, name, price, count, rating };
+
+
+    let likedProducts = JSON.parse(localStorage.getItem('likedProducts')) || [];
+
+
+    const productExists = likedProducts.some(p => p.id === id);
+
+    if (!productExists) {
+
+      likedProducts.push(product);
+      localStorage.setItem('likedProducts', JSON.stringify(likedProducts));
+      alert("Product added  wishlist")
+    } else {
+      alert("Product arleady liked")
+
+    }
+  };
+
+</script>

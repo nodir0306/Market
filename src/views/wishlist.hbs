@@ -1,0 +1,67 @@
+  <style>
+    .card-img-top {
+      height: 300px;
+      width: 300px;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid w-100 d-flex justify-content-center align-items-center mt-2">
+    <h1>My Orders</h1>
+  </div>
+
+  <div class="container-fluid w-100 d-flex justify-content-between align-items-center mt-2">
+    <div id="product-container" class="container row row-gap-5 mx-auto"></div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let products = JSON.parse(localStorage.getItem('likedProducts')) || [];
+        console.log(products)
+      function renderProducts(products) {
+        const productContainer = document.getElementById('product-container');
+        productContainer.innerHTML = ''; 
+
+        if (products.length === 0) {
+          productContainer.innerHTML = '<p class="text-center">No products found.</p>';
+          return;
+        }
+
+        products.forEach(product => {
+          const productCard = document.createElement('div');
+          productCard.className = 'col-xxl-3 col-md-6';
+
+          productCard.innerHTML = `
+            <div class="card" style="width: 18.75rem;">
+              <img
+                src="${product.image_url}"
+                class="card-img-top"
+                alt="${product.name}"
+              />
+              <div class="card-body">
+                <h5 class="card-title">${product.name}</h5>
+                <p class="card-text">Price: ${product.price}$</p>
+                <p class="card-text">Count: ${product.count}</p>
+                <div class="container mx-auto d-flex justify-content-between align-items-center">
+                  <a class="btn btn-primary">
+                    <i class="bi bi-bag"></i>
+                    <span>Order</span>
+                  </a>
+                  <a class="btn btn-danger">
+                    <i class="bi bi-bag-heart-fill"></i>
+                    <span>Like</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          `;
+
+          productContainer.appendChild(productCard);
+        });
+      }
+
+      renderProducts(products);
+    });
+  </script>
+
